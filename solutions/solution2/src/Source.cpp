@@ -64,37 +64,37 @@ int main(int argc, char **argv)
 
 
 	std::string filename;
-
-	//D://Pulpit//OI//Set1Part0//
+	std::string param, param2="20";
 
 
 	opt::options_description desc("Program Weroniki Hryniewskiej");
 	desc.add_options()
-		//("help", "wyœwietlenie pomocy")
-		//("param", opt::value<std::string>(&param)->required(), "parametr")
-		//("solution", opt::value<std::string>(&filename)->required(), "nazwa folderu ze zdjêciami np. D://Pulpit//OI//Set1Part0")
+		("help", "wyswietlenie pomocy")
+		("param", opt::value<std::string>(&param)->required(), "parametr")
+		("solution", opt::value<std::string>(&filename)->required(), "nazwa folderu ze zdjeciami np. ../../../environment/data/test/images")
+		("param2", opt::value<std::string>(&param2), "parametr2")
 		;
 
-	//opt::variables_map vm;
-	//opt::store(opt::parse_command_line(argc, argv, desc), vm);
+	opt::variables_map vm;
+	opt::store(opt::parse_command_line(argc, argv, desc), vm);
 
 
-	//if (argc == 1 /*|| vm.count("help")*/)
-	//{
-	//	std::cout << desc;
-	filename = "D:/Pulpit/zadanie3_KK_WH_MG_2/environment/data/test/images";
-	//return 1;
-//	}
+	if (argc == 1 /*|| vm.count("help")*/)
+	{
+		std::cout << desc;
+	//filename = "../../../environment/data/test/images";
+	return 1;
+	}
 
-	//try {
-	//	opt::notify(vm);
-	//}
-	//catch (std::exception& e)
-	//{
-	//	std::cerr << e.what() << '\n';
-	//	std::cerr << "U¿ycie: " << argv[0] << " --help\n";
-	//	return 2;
-	//}
+	try {
+		opt::notify(vm);
+	}
+	catch (std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+		std::cerr << "Uzycie: " << argv[0] << " --help\n";
+		return 2;
+	}
 
 
 	filename += "/*.jpg";
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
 
 	
 		std::fstream plik;
-		std::string param = "40";
+		
 		plik.open("../solution_result.txt", std::ios::out);
 		int photonumber = 0;
 
@@ -170,7 +170,7 @@ int main(int argc, char **argv)
 				blur(gray, gray, cv::Size(3, 3));
 				threshold(gray, gray, 40, 40, 3);
 
-				cv::Canny(gray, blackwhite, 20, std::stoi(param), 3);
+				cv::Canny(gray, blackwhite, std::stoi(param2), std::stoi(param), 3);
 				//cv::imshow("dst", blackwhite);
 				//cv::waitKey(0);
 

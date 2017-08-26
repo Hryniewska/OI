@@ -1,0 +1,14 @@
+wartosc parametru nieznana
+poprawnosc w %: 9
++ nie bylo znaku 274
++ rozpoznano znak 352
+liczba znakow w moim rozwiazaniu 2735
+liczba znakow do rozpoznania 3654
+wszystkich sprawdzen 5246
+do 50% 21
+<50-60) 95
+<60-70) 120
+<70-80) 37
+<80-90) 59
+<90-100> 20
+

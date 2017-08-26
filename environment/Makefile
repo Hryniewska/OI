@@ -1,16 +1,9 @@
-# Kacper Kołodziej, 214919
 CXX=g++
 CXXFLAGS=-std=c++14 -O2 -Wall -Wextra -pedantic \
 		 -include cstdint \
-		 -Irun/include \
-		 -Irun/include/ImageMagick/ \
-		 -fopenmp -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16
-
-LDFLAGS=-Lrun/lib/ \
-		-Lrun/lib/ImageMagick/ \
-		-lboost_program_options \
-		-lMagick++ -lMagickWand -lMagickCore \
-		-fopenmp -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16  \
+		 `GraphicsMagick++-config --cppflags --cxxflags --ldflags --libs`
+LDFLAGS=-lboost_program_options \
+		`GraphicsMagick++-config --cppflags --cxxflags --ldflags --libs` \
 		-pthread
 
 OBJS=src/check.o \
