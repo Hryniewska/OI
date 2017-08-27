@@ -65,6 +65,7 @@ int main(int argc, char **argv)
 
 	std::string filename;
 	std::string param, param2="20";
+	std::string outfile="../solution_result.txt";
 
 
 	opt::options_description desc("Program Weroniki Hryniewskiej");
@@ -73,6 +74,7 @@ int main(int argc, char **argv)
 		("param", opt::value<std::string>(&param)->required(), "parametr")
 		("solution", opt::value<std::string>(&filename)->required(), "nazwa folderu ze zdjeciami np. ../../../environment/data/test/images")
 		("param2", opt::value<std::string>(&param2), "parametr2")
+		("outfile", opt::value<std::string>(&outfile), "outfile")
 		;
 
 	opt::variables_map vm;
@@ -116,7 +118,7 @@ int main(int argc, char **argv)
 	
 		std::fstream plik;
 		
-		plik.open("../solution_result.txt", std::ios::out);
+		plik.open(outfile, std::ios::out);
 		int photonumber = 0;
 
 		for (size_t i = 0; i < count; i++)
@@ -170,7 +172,18 @@ int main(int argc, char **argv)
 				blur(gray, gray, cv::Size(3, 3));
 				threshold(gray, gray, 40, 40, 3);
 
-				cv::Canny(gray, blackwhite, std::stoi(param2), std::stoi(param), 3);
+
+				try
+				{
+					cv::Canny(gray, blackwhite, std::stoi(param2), std::stoi(param2), 3);
+				} 
+				catch (std::invalid_argument& e)
+				{
+					std::cout << "Invalid argument : param " << param << ", param2 " << param2 << std::endl;
+					return 3;
+				}
+
+
 				//cv::imshow("dst", blackwhite);
 				//cv::waitKey(0);
 

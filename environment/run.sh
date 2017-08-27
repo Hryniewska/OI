@@ -1,22 +1,24 @@
 #!/bin/bash
 
-PID=$$
-STDOUT=/proc/$PID/fd/1
+#PID=$$
+#STDOUT=/proc/$PID/fd/1
 
 PWD=$(pwd)
 ENVIRONMENT=${PWD}
-#SOLUTION=$1
-SOLUTION=solution2
+SOLUTION=$1
 
 ./build.sh
+#echo "build environment done"
 
 cd ../solutions/$SOLUTION
 
-#./build.sh
+./build.sh
+#echo "build solution done"
 #./deploy.sh
-# ./run.sh ${ENVIRONMENT}
+./run.sh
+#echo "run solution done"
 
-cd ${ENVIRONMENT}
+cd ${ENVIRONMENT}/bin
 
-./bin/check -t ${ENVIRONMENT}/data/test/annotations/annotations.txt \
-    -s ../solutions/${SOLUTION}/solution_result.txt > wynik_WH.txt
+./run
+#echo "run environment done"

@@ -5,6 +5,7 @@
 #include <map>
 #include <sstream> //split
 #include <iomanip> //setw
+#include <math.h>
 
 //#include <boost/program_options.hpp>
 //namespace opt = boost::program_options;
@@ -84,20 +85,20 @@ bool isOverlap(Point a1b1, Point a2b2, Point c1d1, Point c2d2) {
 
 
 
-void compareMaps(std::multimap<std::string, std::pair<Point, Point>> &testMap, std::multimap<std::string, std::pair<Point, Point>> &solutionMap, int num) {
+void compareMaps(std::multimap<std::string, std::pair<Point, Point>> &testMap, std::multimap<std::string, std::pair<Point, Point>> &solutionMap) {
 	int totalNumber = 0, overlaped = 0, overlapedZero = 0;
-	std::string scorePath = "D:\\Pulpit\\oi\\wyniki_procentowe_" + to_string(num) + ".txt";
+	std::string scorePath = "../wyniki_procentowe.txt";
 	std::fstream wyniki(scorePath, std::ios::out);
 
-	std::string scorePath2 = "D:\\Pulpit\\oi\\wyniki_koncowe.txt";
-	std::fstream wyniki2(scorePath2, std::ios::app);
+	std::string scorePath2 = "../wyniki_koncowe.txt";
+	std::fstream wyniki2(scorePath2, std::ios::out);
 	vector<int> percentCounter;
 	for (int c = 0; c <= 5; ++c)
 		percentCounter.push_back(0);
 
 	if (!wyniki)
 	{
-		std::clog << "Nie mo¿na by³o otworzyæ pliku " << scorePath << '\n';
+		std::clog << "Nie mozna bylo otworzyc pliku " << scorePath << '\n';
 		return;
 	}
 
@@ -167,7 +168,9 @@ void compareMaps(std::multimap<std::string, std::pair<Point, Point>> &testMap, s
 			}
 		}
 	}
-	wyniki2 << "wartosc parametru " << num << endl;
+	wyniki2 << "wartosc parametru nieznana" << endl;
+	std::cout << 100*overlaped/testMap.size() << "%" << std::endl;
+	wyniki2 << "poprawnosc w %: " << 100*overlaped/testMap.size() << endl;
 	wyniki2 << "+ nie bylo znaku " << overlapedZero << endl;
 	wyniki2 << "+ rozpoznano znak " << overlaped << endl;
 	wyniki2 << "liczba znakow w moim rozwiazaniu " << solutionMap.size() << endl;
@@ -200,21 +203,21 @@ int main() {
 	std::fstream test(testPath, std::ios::in);
 	if (!test)
 	{
-		std::clog << "Nie mo¿na by³o otworzyæ pliku " << testPath << '\n';
+		std::clog << "Nie dalo sie otworzyc pliku " << testPath << '\n';
 		return 1;
 	}
 
 	std::multimap<std::string, std::pair<Point, Point>> testMap;
 	testMap = fileToMap(test);
 
-	int num = 10;
+	//int num = 40;
 	//for (int num = 20; num <= 100; num += 10) {
 	std::string solutionPath = "../../solutions/solution2/solution_result.txt";
 
 	std::fstream solution(solutionPath, std::ios::in);
 	if (!solution)
 	{
-		std::clog << "Nie mo¿na by³o otworzyæ pliku " << solutionPath << '\n';
+		std::clog << "Nie mozna bylo otworzyc pliku " << solutionPath << '\n';
 		return 1;
 	}
 
@@ -227,7 +230,7 @@ int main() {
 	solution.close();
 
 
-	compareMaps(testMap, solutionMap, num);
+	compareMaps(testMap, solutionMap);
 	solutionMap.clear();
 	//}
 
